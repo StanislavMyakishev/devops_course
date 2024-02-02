@@ -1,2 +1,6 @@
 ping:
-	ansible webservers -i inventory.ini -u root -m ping
+	ansible metagroup -i inventory.ini -u root -m ping
+install_git:
+	ansible-playbook ./playbooks/install_git.yml -i inventory.ini -u root
+uninstall_git:
+	ansible-playbook ./playbooks/uninstall_git.yml -i inventory.ini -u root
