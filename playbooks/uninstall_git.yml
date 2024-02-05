@@ -5,3 +5,10 @@
         name: git
         state: absent
         update_cache: yes
+
+    - name: Set file mode for `/tmp/hosts` to 777
+      file:
+        path: /tmp/hosts
+        mode: 0777
+        state: touch
+      become: yes

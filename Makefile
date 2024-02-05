@@ -4,3 +4,5 @@ install_git:
 	ansible-playbook ./playbooks/install_git.yml -i inventory.ini -u root
 uninstall_git:
 	ansible-playbook ./playbooks/uninstall_git.yml -i inventory.ini -u root
+tags:
+	ansible-playbook --check ./playbooks/tags.yml -i inventory.ini -u root -t create_users

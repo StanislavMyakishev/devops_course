@@ -1,0 +1,39 @@
+- hosts: metagroup
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      become: yes
+      tags: [apt-update]
+    
+    - name: Install git
+      apt:
+        name: git
+        state: present
+        update_cache: yes
+      become: yes
+      tags: [git]
+ 
+    - name: Create Users
+      user:
+        name: "{{ item }}"
+        state: present
+        shell: /bin/bash
+        createhome: yes
+      loop:
+        - sansa
+        - tirion
+        - arya
+      become: yes
+      tags: [create_users] 
+
+    - name: Validate User Home Directories
+      stat:
+        path: "/home/{{ item }}"
+      loop:
+        - sansa
+        - tirion
+        - arya
+      register: user_stats
+      become: yes
+      tags: [create_users] 
