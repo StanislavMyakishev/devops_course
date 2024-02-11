@@ -4,16 +4,15 @@
       apt:
         name: nginx
         state: present
-        update_cache: yes
 
     - name: copy nginx.conf
-      copy:
+      template:
         src: ../sources/nginx.conf
         dest: /etc/nginx/nginx.conf
       notify: restart nginx
 
     - name: copy index.html
-      copy:
+      template:
         src: ../sources/index.html
         dest: /usr/share/nginx/html/index.html
 
@@ -22,4 +21,3 @@
       service:
         name: nginx
         state: restarted
-        daemon_reload: true
