@@ -1,0 +1,25 @@
+- hosts: metagroup
+  tasks:
+    - name: install nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: copy nginx.conf
+      copy:
+        src: ../sources/nginx.conf
+        dest: /etc/nginx/nginx.conf
+      notify: restart nginx
+
+    - name: copy index.html
+      copy:
+        src: ../sources/index.html
+        dest: /usr/share/nginx/html/index.html
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+        daemon_reload: true
