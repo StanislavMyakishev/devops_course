@@ -1,20 +1,30 @@
 - hosts: metagroup
+  vars:
+    - nginx_port: 8080
+    - root_dir: /var/tmp/www
   tasks:
     - name: install nginx
       apt:
         name: nginx
         state: present
+    
+    - name: create root dir
+      file:
+        path: "{{ root_dir }}"
+        state: directory
+        owner: www-data
+        group: www-data
 
-    - name: copy nginx.conf
+    - name: template nginx.conf
       template:
         src: ../sources/nginx.conf
-        dest: /etc/nginx/nginx.conf
+        dest: "{{ root_dir }}/nginx.conf"
       notify: restart nginx
 
-    - name: copy index.html
+    - name: template index.html
       template:
         src: ../sources/index.html
-        dest: /usr/share/nginx/html/index.html
+        dest: "{{ root_dir }}/index.html"
 
   handlers:
     - name: restart nginx
