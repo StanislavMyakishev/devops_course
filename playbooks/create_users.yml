@@ -1,0 +1,38 @@
+- hosts: webservers
+  gather_facts: no
+  vars: 
+    users:
+     - jaime
+     - sansa
+     - robert
+  
+  tasks:
+  - name: Install git
+    apt:
+      name: git
+      state: present
+    become: yes
+
+  - name: create users
+    user:
+      name: "{{ item }}"
+      state: present
+      shell: /bin/bash
+      createhome: yes
+    loop: "{{ users }}"
+    become: yes
+  
+  - name: update users git configs
+    template:
+      src: ../sources/.gitconfig
+      dest: "/home/{{ item }}/.gitconfig"
+    loop: "{{ users }}"
+
+  - name: upload ssh authorized keys
+    vars:
+      key_path: "../files/{{ item }}/id_rsa.pub.pub"
+    ansible.posix.authorized_key:
+      user: "{{ item }}"
+      state: present
+      key: "{{ lookup('file', key_path) }}"
+    loop: "{{ users }}"
