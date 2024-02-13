@@ -1,8 +1,8 @@
 - hosts: webservers
+  gather_facts: no
   tasks:
     - name: Install git
       apt:
         name: git
         state: present
-        update_cache: yes
       become: yes
