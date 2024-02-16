@@ -8,6 +8,15 @@
       apt:
         name: nginx
         state: present
+
+    - name: install cowsay
+      apt:
+        name: cowsay
+        state: present
+
+    - name: run cowsay
+      shell: cowsay "This is {{ server_name }}"
+      register: cowsay_result
     
     - name: create root dir
       file:
