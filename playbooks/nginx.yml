@@ -1,7 +1,8 @@
-- hosts: metagroup
+- hosts: webservers
   vars:
     - nginx_port: 8080
     - root_dir: /var/tmp/www
+    - deployment_date: "{{ lookup('pipe', 'date +%Y-%m-%d') }}"
   tasks:
     - name: install nginx
       apt:
@@ -18,13 +19,13 @@
     - name: template nginx.conf
       template:
         src: ../sources/nginx.conf
-        dest: "{{ root_dir }}/nginx.conf"
+        dest: "/etc/nginx/nginx.conf"
       notify: restart nginx
 
     - name: template index.html
       template:
         src: ../sources/index.html
-        dest: "{{ root_dir }}/index.html"
+        dest: "/usr/share/nginx/html/index.html"
 
   handlers:
     - name: restart nginx
