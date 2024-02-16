@@ -1,0 +1,5 @@
+roles:
+  - name: geerlingguy.git
+    version: 3.0.1
+  - name: geerlingguy.nodejs
+    version: 6.1.1

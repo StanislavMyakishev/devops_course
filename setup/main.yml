@@ -1,0 +1,21 @@
+- hosts: webservers
+  vars: 
+    users:
+     - jaime
+     - sansa
+     - robert
+  
+  tasks:
+  - name: install git via role
+    include_role:
+      name: geerlingguy.git
+
+  - name: install nodejs via role
+    include_role:
+      name: geerlingguy.nodejs
+
+  - name: create users
+    include_role:
+      name: create_user
+
+  

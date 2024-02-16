@@ -10,3 +10,5 @@ nginx:
 	ansible-playbook ./playbooks/nginx.yml -i inventory.ini -u root
 create_users:
 	ansible-playbook ./playbooks/create_users.yml -i inventory.ini -u root
+project_setup:
+	ansible-playbook ./setup/main.yml -i inventory.ini -u root
